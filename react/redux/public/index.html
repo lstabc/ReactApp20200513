@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Redux principle 01</title>
+</head>
+<body>
+  <h1>redux principle</h1>
+  <div class="counter">
+    <button class="btn" onclick="dispatch({type: 'COUNT_DECREMENT', number: 1})">-</button>
+    <span class="count" id="count"></span>
+    <button class="btn" id="add" onclick="dispatch({type: 'COUNT_INCREMENT', number: 1})">+</button>
+  </div>
+  <script>
+    // 定义一个计数器的状态
+    const countState = {
+      count: 10
+    }
+
+    // 定一个方法叫changeState，用于处理state的数据，每次都返回一个新的状态
+    const changeState = (action) => {
+      switch(action.type) {
+        // 处理减
+        case 'COUNT_DECREMENT':
+          countState.count -= action.number
+          break;
+        // 处理加        
+        case 'COUNT_INCREMENT':
+          countState.count += action.number
+          break;
+        default:
+          break;
+      }
+    }
+
+    // 定义一个方法用于渲染计数器的dom
+    const renderCount = (state) => {
+      const countDom = document.querySelector('#count')
+      countDom.innerHTML = state.count
+    }
+  
+    // 首次渲染数据
+    renderCount(countState)
+
+    // 定义一个dispatch的方法，接收到动作之后，自动调用
+    const dispatch = (action) => {
+      changeState(action)
+      renderCount(countState)
+    }
+
+  </script>
+</body>
+</html>
